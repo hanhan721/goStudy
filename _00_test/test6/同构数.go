@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // 求同构数1
@@ -45,9 +46,18 @@ func getDigits(num int) int {
 }
 
 func main() {
-	for i := 1; i < 1000; i++ {
+	start := time.Now()
+	for i := 1; i < 10000; i++ {
 		if isomorphic(i) {
 			fmt.Println(i)
 		}
 	}
+	end1 := time.Now()
+	fmt.Println(time.Since(start))
+	for i := 1; i < 10000; i++ {
+		if isomorphic2(i) {
+			fmt.Println(i)
+		}
+	}
+	fmt.Println(time.Since(end1))
 }
