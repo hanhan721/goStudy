@@ -9,6 +9,7 @@ func main() {
 	fmt.Println(sum(1, 2))
 	fmt.Println(returns(1, 2))
 	fmt.Println(returns2(1, 2))
+	fmt.Println(sums(1, 2, 3, 4, 5))
 }
 
 // 两数和方法
@@ -26,4 +27,13 @@ func returns2(a int, b int) (r1 int, r2 int) {
 	r1 = a * 10
 	r2 = r1 * b
 	return
+}
+
+// 不确定参数
+func sums(x ...int) int {
+	sum := 0
+	for i := range x {
+		sum += i
+	}
+	return sum
 }
