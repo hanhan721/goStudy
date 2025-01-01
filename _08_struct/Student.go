@@ -19,8 +19,9 @@ func (s *Student) GetAge() int {
 	return s.age
 }
 
-func (s *Student) SetAge(age int) {
+func (s *Student) SetAge(age int) *Student {
 	s.age = age
+	return s
 }
 
 func (s *Student) String() string {

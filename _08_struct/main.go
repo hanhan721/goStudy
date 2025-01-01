@@ -27,4 +27,11 @@ func main() {
 	student.SetAge(14)
 	fmt.Println(&student)
 	fmt.Println(student.GetName())
+
+	student1 := new(Student) //指针类型
+	//student1 := &Student{} 和上边一样
+	student1.SetAge(15).SetName("李四")
+	fmt.Println(student1)
+	fmt.Printf("student类型: %T\n", student)
+	fmt.Printf("student1类型: %T\n", student1)
 }
