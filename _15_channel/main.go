@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
@@ -45,7 +46,37 @@ func test2() {
 	fmt.Println("通道 c 的当前元素数量:", len(c), "容量:", cap(c))
 }
 
+// 测试同时写数据和读数据
+var wg sync.WaitGroup
+
+func write(ch chan int) {
+	for i := 1; i <= 10; i++ {
+		time.Sleep(500 * time.Millisecond)
+		fmt.Println("写:", i)
+		ch <- i
+	}
+	close(ch)
+	wg.Done()
+}
+func read(ch chan int) {
+	// 使用for range 循环读取管道,管道在写入必须手动close, 使用for i 循环就不需要
+	for v := range ch {
+		// 假设读取速度快于写入速度,管道也没问题
+		time.Sleep(100 * time.Millisecond)
+		fmt.Println("读:", v)
+	}
+	wg.Done()
+}
 func main() {
 	//test1()
-	test2()
+	//test2()
+
+	//测试同时写数据和读数据
+	var ch = make(chan int, 10)
+	wg.Add(1)
+	go write(ch)
+	wg.Add(1)
+	go read(ch)
+	wg.Wait()
+	fmt.Println("程序结束....")
 }
