@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 func main() {
 	c := make(chan int)
@@ -14,6 +17,25 @@ func main() {
 		quit <- 0
 	}()
 	selectTest(c, quit)
+	fmt.Println("-----------------------")
+	intChan := make(chan int, 5)
+	stringChan := make(chan string, 5)
+	for i := range 5 {
+		//往两个管道存入数据
+		intChan <- i + 1
+		stringChan <- "\"" + strconv.Itoa(i+1) + "\""
+	}
+	for {
+		select {
+		case v := <-intChan:
+			fmt.Println("从整型管道取出数据:", v)
+		case v := <-stringChan:
+			fmt.Println("从字符串管道取出数据:", v)
+		default:
+			fmt.Println("结束....")
+			return
+		}
+	}
 }
 
 func selectTest(c, quit chan int) {
